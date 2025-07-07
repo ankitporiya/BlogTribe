@@ -505,7 +505,7 @@ const RegisterPage = () => {
               color: '#A64D79'
             }}
           >
-            {error}
+            {error}! Create Strong Password
           </motion.div>
         )}
 
