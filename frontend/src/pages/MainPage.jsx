@@ -25,7 +25,8 @@ const MainPage = () => {
               Welcome, {user?.name}!
             </h2>
             <p className="text-gray-500">
-              This is the main page for regular users. Blog features will be implemented here.
+              This is the main page for regular users. Blog features will be implemented here. 
+              ANKIT
             </p>
           </div>
         </div>
