@@ -42,6 +42,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../components/AuthProvider';
 import { User, FileText, PlusCircle, BookOpen, LogOut, Menu, X } from 'lucide-react';
 import ProfilePage from '../components/Profile';
+import BlogsPage from '../components/Blogs';
+import CreateBlogPage from '../components/CreateBlogs';
 
 // Animation variants
 const pageVariants = {
@@ -146,12 +148,6 @@ const Profile = () => (
     animate="visible"
     exit="exit"
   >
-    <motion.h2 
-      className="text-2xl font-bold text-white mb-4"
-      variants={itemVariants}
-    >
-      Profile
-    </motion.h2>
    
       <ProfilePage/>
     
@@ -167,20 +163,7 @@ const Blogs = () => (
     animate="visible"
     exit="exit"
   >
-    <motion.h2 
-      className="text-2xl font-bold text-white mb-4"
-      variants={itemVariants}
-    >
-      All Blogs
-    </motion.h2>
-    <motion.div 
-      className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-xl p-6 border border-white border-opacity-20"
-      variants={cardVariants}
-      whileHover={{ scale: 1.02, y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <p className="text-gray-200">Browse all blogs from the community.</p>
-    </motion.div>
+    <BlogsPage/>
   </motion.div>
 );
 
@@ -193,21 +176,9 @@ const CreateBlog = () => (
     animate="visible"
     exit="exit"
   >
-    <motion.h2 
-      className="text-2xl font-bold text-white mb-4"
-      variants={itemVariants}
-    >
-      Create New Blog
-    </motion.h2>
-    <motion.div 
-      className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-xl p-6 border border-white border-opacity-20"
-      variants={cardVariants}
-      whileHover={{ scale: 1.02, y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <p className="text-gray-200">Create and publish a new blog post.</p>
+
+      <CreateBlogPage/>
     </motion.div>
-  </motion.div>
 );
 
 const MyBlogs = () => (
