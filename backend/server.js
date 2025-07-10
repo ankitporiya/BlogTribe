@@ -4,7 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
-
+const BlogRoutes = require('./routes/BlogRoutes');
 // Load environment variables
 dotenv.config();
 
@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/blogs', BlogRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
