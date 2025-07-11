@@ -1,897 +1,740 @@
-// import React, { useState, useMemo } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
-// import { Heart, MessageCircle, X, ChevronLeft, ChevronRight, Filter, Calendar, User, Eye } from 'lucide-react';
-
-// const Blogs = () => {
-//   // Sample blog data
-//   const blogData = [
-//     {
-//       id: 1,
-//       title: "The Future of Web Development",
-//       category: "Technology",
-//       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=250&fit=crop",
-//       author: "John Doe",
-//       date: "2024-03-15",
-//       content: "Web development is evolving rapidly with new technologies emerging every day. From AI-powered development tools to advanced frameworks, the landscape is constantly changing. This comprehensive guide explores the latest trends and what developers need to know to stay ahead in 2024 and beyond. We'll dive deep into emerging technologies, best practices, and the skills that will be most valuable in the coming years.",
-//       likes: 124,
-//       comments: 23
-//     },
-//     {
-//       id: 2,
-//       title: "Mastering React Hooks",
-//       category: "Technology",
-//       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop",
-//       author: "Jane Smith",
-//       date: "2024-03-10",
-//       content: "React Hooks have revolutionized how we write React components. This in-depth tutorial covers everything from basic useState and useEffect to advanced custom hooks. Learn how to optimize your React applications and write cleaner, more maintainable code. We'll explore real-world examples and common patterns that every React developer should know.",
-//       likes: 89,
-//       comments: 15
-//     },
-//     {
-//       id: 3,
-//       title: "10 Healthy Recipes for Busy Professionals",
-//       category: "Health",
-//       image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop",
-//       author: "Alice Johnson",
-//       date: "2024-03-08",
-//       content: "Maintaining a healthy diet while managing a busy professional life can be challenging. These 10 carefully curated recipes are designed for maximum nutrition with minimal preparation time. Each recipe includes detailed nutritional information and can be prepared in under 30 minutes. Perfect for meal prep and maintaining your health goals.",
-//       likes: 156,
-//       comments: 32
-//     },
-//     {
-//       id: 4,
-//       title: "Digital Marketing Trends 2024",
-//       category: "Business",
-//       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
-//       author: "Bob Wilson",
-//       date: "2024-03-05",
-//       content: "The digital marketing landscape is constantly evolving. Stay ahead of the curve with these emerging trends that will shape marketing strategies in 2024. From AI-powered personalization to voice search optimization, discover what's next in digital marketing. Learn how to adapt your strategies and reach your target audience more effectively.",
-//       likes: 203,
-//       comments: 45
-//     },
-//     {
-//       id: 5,
-//       title: "The Art of Minimalist Design",
-//       category: "Design",
-//       image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=250&fit=crop",
-//       author: "Sarah Davis",
-//       date: "2024-03-03",
-//       content: "Minimalist design isn't just about using less - it's about using the right elements to create maximum impact. This guide explores the principles of minimalist design and how to apply them effectively in your projects. Learn about color theory, typography, and spacing to create designs that are both beautiful and functional.",
-//       likes: 78,
-//       comments: 18
-//     },
-//     {
-//       id: 6,
-//       title: "Cryptocurrency Investment Guide",
-//       category: "Finance",
-//       image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=250&fit=crop",
-//       author: "Mike Brown",
-//       date: "2024-02-28",
-//       content: "Navigate the complex world of cryptocurrency investment with this comprehensive guide. Learn about different types of cryptocurrencies, risk management strategies, and how to build a balanced crypto portfolio. Whether you're a beginner or experienced investor, this guide provides valuable insights for making informed decisions.",
-//       likes: 267,
-//       comments: 56
-//     },
-//     {
-//       id: 7,
-//       title: "Mental Health in the Digital Age",
-//       category: "Health",
-//       image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop",
-//       author: "Dr. Emily Chen",
-//       date: "2024-02-25",
-//       content: "The digital age has brought unprecedented connectivity, but it has also created new challenges for mental health. This article explores the impact of technology on our psychological well-being and provides practical strategies for maintaining mental health in our increasingly connected world. Learn about digital detox techniques and healthy technology habits.",
-//       likes: 189,
-//       comments: 41
-//     },
-//     {
-//       id: 8,
-//       title: "Sustainable Business Practices",
-//       category: "Business",
-//       image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=250&fit=crop",
-//       author: "Green Corp Team",
-//       date: "2024-02-22",
-//       content: "Sustainability is no longer just a buzzword - it's a business imperative. This comprehensive guide explores how businesses can implement sustainable practices that benefit both the environment and their bottom line. From reducing carbon footprint to sustainable supply chain management, learn how to build a more sustainable business model.",
-//       likes: 142,
-//       comments: 29
-//     },
-//     {
-//       id: 9,
-//       title: "AI and Machine Learning Basics",
-//       category: "Technology",
-//       image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=250&fit=crop",
-//       author: "Tech Innovators",
-//       date: "2024-02-20",
-//       content: "Artificial Intelligence and Machine Learning are transforming industries across the globe. This beginner-friendly guide breaks down complex AI concepts into digestible explanations. Learn about neural networks, deep learning, and how AI is being applied in various sectors. Perfect for anyone looking to understand the AI revolution.",
-//       likes: 312,
-//       comments: 67
-//     },
-//     {
-//       id: 10,
-//       title: "Photography Composition Tips",
-//       category: "Design",
-//       image: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400&h=250&fit=crop",
-//       author: "Visual Artist",
-//       date: "2024-02-18",
-//       content: "Great photography is about more than just having good equipment - it's about understanding composition. This guide covers essential composition techniques that will transform your photography. From the rule of thirds to leading lines, learn how to create visually compelling images that tell a story.",
-//       likes: 95,
-//       comments: 22
-//     },
-//     {
-//       id: 11,
-//       title: "Personal Finance Management",
-//       category: "Finance",
-//       image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=250&fit=crop",
-//       author: "Finance Expert",
-//       date: "2024-02-15",
-//       content: "Take control of your financial future with these proven personal finance strategies. Learn about budgeting, saving, investing, and debt management. This comprehensive guide provides practical tips for building wealth and achieving financial independence, regardless of your current financial situation.",
-//       likes: 178,
-//       comments: 34
-//     },
-//     {
-//       id: 12,
-//       title: "Remote Work Productivity",
-//       category: "Business",
-//       image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop",
-//       author: "Remote Team",
-//       date: "2024-02-12",
-//       content: "Remote work has become the new normal for many professionals. This guide shares proven strategies for maintaining productivity while working from home. From setting up an effective workspace to managing time and communication, learn how to thrive in a remote work environment.",
-//       likes: 156,
-//       comments: 38
-//     }
-//   ];
-
-//   const [selectedBlog, setSelectedBlog] = useState(null);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [selectedCategory, setSelectedCategory] = useState('All');
-//   const [likedBlogs, setLikedBlogs] = useState(new Set());
-//   const [blogLikes, setBlogLikes] = useState(
-//     blogData.reduce((acc, blog) => ({ ...acc, [blog.id]: blog.likes }), {})
-//   );
-//   const [showComments, setShowComments] = useState(false);
-//   const [comments, setComments] = useState({});
-//   const [newComment, setNewComment] = useState('');
-
-//   const blogsPerPage = 9;
-//   const categories = ['All', ...new Set(blogData.map(blog => blog.category))];
-
-//   // Filter blogs based on selected category
-//   const filteredBlogs = useMemo(() => {
-//     return selectedCategory === 'All' 
-//       ? blogData 
-//       : blogData.filter(blog => blog.category === selectedCategory);
-//   }, [selectedCategory]);
-
-//   // Calculate pagination
-//   const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
-//   const currentBlogs = filteredBlogs.slice(
-//     (currentPage - 1) * blogsPerPage,
-//     currentPage * blogsPerPage
-//   );
-
-//   const handleLike = (blogId) => {
-//     const newLikedBlogs = new Set(likedBlogs);
-//     if (likedBlogs.has(blogId)) {
-//       newLikedBlogs.delete(blogId);
-//       setBlogLikes(prev => ({ ...prev, [blogId]: prev[blogId] - 1 }));
-//     } else {
-//       newLikedBlogs.add(blogId);
-//       setBlogLikes(prev => ({ ...prev, [blogId]: prev[blogId] + 1 }));
-//     }
-//     setLikedBlogs(newLikedBlogs);
-//   };
-
-//   const handleAddComment = (blogId) => {
-//     if (newComment.trim()) {
-//       setComments(prev => ({
-//         ...prev,
-//         [blogId]: [
-//           ...(prev[blogId] || []),
-//           {
-//             id: Date.now(),
-//             text: newComment,
-//             author: 'You',
-//             date: new Date().toLocaleDateString()
-//           }
-//         ]
-//       }));
-//       setNewComment('');
-//     }
-//   };
-
-//   const handleCategoryChange = (category) => {
-//     setSelectedCategory(category);
-//     setCurrentPage(1);
-//   };
-
-//   const handlePageChange = (page) => {
-//     setCurrentPage(page);
-//   };
-
-//   const cardVariants = {
-//     hidden: { opacity: 0, y: 20 },
-//     visible: { opacity: 1, y: 0 },
-//     hover: { 
-//       y: -10, 
-//       transition: { duration: 0.3 } 
-//     }
-//   };
-
-//   const modalVariants = {
-//     hidden: { opacity: 0, scale: 0.8 },
-//     visible: { 
-//       opacity: 1, 
-//       scale: 1,
-//       transition: { duration: 0.3 }
-//     },
-//     exit: { 
-//       opacity: 0, 
-//       scale: 0.8,
-//       transition: { duration: 0.2 }
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen" >
-//       <div className="container mx-auto px-4 py-8">
-//         {/* Header */}
-//         <motion.div 
-//           initial={{ opacity: 0, y: -20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           className="text-center mb-12"
-//         >
-//           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-//             Our Blog
-//           </h1>
-//           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-//             Discover insights, tips, and stories from our community of experts
-//           </p>
-//         </motion.div>
-
-//         {/* Category Filter */}
-//         <motion.div 
-//           initial={{ opacity: 0, y: 20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ delay: 0.2 }}
-//           className="mb-8"
-//         >
-//           <div className="flex flex-wrap gap-2 justify-center">
-//             {categories.map((category) => (
-//               <button
-//                 key={category}
-//                 onClick={() => handleCategoryChange(category)}
-//                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-//                   selectedCategory === category
-//                     ? 'text-white'
-//                     : 'text-gray-400 hover:text-white'
-//                 }`}
-//                 style={{
-//                   backgroundColor: selectedCategory === category ? '#A64D79' : '#3B1C32',
-//                   borderColor: selectedCategory === category ? '#A64D79' : '#6A1E55'
-//                 }}
-//               >
-//                 <Filter className="w-4 h-4 inline mr-1" />
-//                 {category}
-//               </button>
-//             ))}
-//           </div>
-//         </motion.div>
-
-//         {/* Blog Grid */}
-//         <motion.div 
-//           layout
-//           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-//         >
-//           <AnimatePresence mode="wait">
-//             {currentBlogs.map((blog, index) => (
-//               <motion.div
-//                 key={blog.id}
-//                 layout
-//                 variants={cardVariants}
-//                 initial="hidden"
-//                 animate="visible"
-//                 exit="hidden"
-//                 whileHover="hover"
-//                 transition={{ delay: index * 0.1 }}
-//                 className="rounded-lg overflow-hidden shadow-xl"
-//                 style={{ backgroundColor: '#3B1C32' }}
-//               >
-//                 <div className="relative">
-//                   <img
-//                     src={blog.image}
-//                     alt={blog.title}
-//                     className="w-full h-48 object-cover"
-//                   />
-//                   <div 
-//                     className="absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium text-white"
-//                     style={{ backgroundColor: '#A64D79' }}
-//                   >
-//                     {blog.category}
-//                   </div>
-//                 </div>
-                
-//                 <div className="p-6">
-//                   <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
-//                     {blog.title}
-//                   </h3>
-                  
-//                   <div className="flex items-center text-gray-300 text-sm mb-4 space-x-4">
-//                     <div className="flex items-center">
-//                       <User className="w-4 h-4 mr-1" />
-//                       {blog.author}
-//                     </div>
-//                     <div className="flex items-center">
-//                       <Calendar className="w-4 h-4 mr-1" />
-//                       {new Date(blog.date).toLocaleDateString()}
-//                     </div>
-//                   </div>
-                  
-//                   <div className="flex items-center justify-between">
-//                     <button
-//                       onClick={() => setSelectedBlog(blog)}
-//                       className="flex items-center px-4 py-2 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105"
-//                       style={{ backgroundColor: '#6A1E55' }}
-//                     >
-//                       <Eye className="w-4 h-4 mr-2" />
-//                       Read Article
-//                     </button>
-                    
-//                     <div className="flex items-center space-x-4 text-gray-300">
-//                       <span className="flex items-center">
-//                         <Heart className="w-4 h-4 mr-1" />
-//                         {blogLikes[blog.id]}
-//                       </span>
-//                       <span className="flex items-center">
-//                         <MessageCircle className="w-4 h-4 mr-1" />
-//                         {blog.comments}
-//                       </span>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </motion.div>
-//             ))}
-//           </AnimatePresence>
-//         </motion.div>
-
-//         {/* Pagination */}
-//         {totalPages > 1 && (
-//           <motion.div 
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             transition={{ delay: 0.5 }}
-//             className="flex justify-center items-center space-x-4"
-//           >
-//             <button
-//               onClick={() => handlePageChange(currentPage - 1)}
-//               disabled={currentPage === 1}
-//               className={`p-2 rounded-lg transition-all duration-300 ${
-//                 currentPage === 1 
-//                   ? 'text-gray-600 cursor-not-allowed' 
-//                   : 'text-white hover:scale-110'
-//               }`}
-//               style={{ backgroundColor: currentPage === 1 ? '#3B1C32' : '#6A1E55' }}
-//             >
-//               <ChevronLeft className="w-5 h-5" />
-//             </button>
-            
-//             <div className="flex space-x-2">
-//               {[...Array(totalPages)].map((_, index) => (
-//                 <button
-//                   key={index + 1}
-//                   onClick={() => handlePageChange(index + 1)}
-//                   className={`w-10 h-10 rounded-lg font-medium transition-all duration-300 ${
-//                     currentPage === index + 1
-//                       ? 'text-white scale-110'
-//                       : 'text-gray-400 hover:text-white'
-//                   }`}
-//                   style={{
-//                     backgroundColor: currentPage === index + 1 ? '#A64D79' : '#3B1C32'
-//                   }}
-//                 >
-//                   {index + 1}
-//                 </button>
-//               ))}
-//             </div>
-            
-//             <button
-//               onClick={() => handlePageChange(currentPage + 1)}
-//               disabled={currentPage === totalPages}
-//               className={`p-2 rounded-lg transition-all duration-300 ${
-//                 currentPage === totalPages 
-//                   ? 'text-gray-600 cursor-not-allowed' 
-//                   : 'text-white hover:scale-110'
-//               }`}
-//               style={{ backgroundColor: currentPage === totalPages ? '#3B1C32' : '#6A1E55' }}
-//             >
-//               <ChevronRight className="w-5 h-5" />
-//             </button>
-//           </motion.div>
-//         )}
-//       </div>
-
-//       {/* Modal */}
-//       <AnimatePresence>
-//         {selectedBlog && (
-//           <motion.div
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             exit={{ opacity: 0 }}
-//             className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50"
-//             onClick={() => setSelectedBlog(null)}
-//           >
-//             <motion.div
-//               variants={modalVariants}
-//               initial="hidden"
-//               animate="visible"
-//               exit="exit"
-//               className="max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl"
-//               style={{ backgroundColor: '#1A1A1D' }}
-//               onClick={(e) => e.stopPropagation()}
-//             >
-//               <div className="relative">
-//                 <img
-//                   src={selectedBlog.image}
-//                   alt={selectedBlog.title}
-//                   className="w-full h-64 object-cover"
-//                 />
-//                 <button
-//                   onClick={() => setSelectedBlog(null)}
-//                   className="absolute top-4 right-4 p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70 transition-all duration-300"
-//                 >
-//                   <X className="w-6 h-6" />
-//                 </button>
-//               </div>
-              
-//               <div className="p-8">
-//                 <div className="flex items-center justify-between mb-6">
-//                   <div 
-//                     className="px-3 py-1 rounded-full text-sm font-medium text-white"
-//                     style={{ backgroundColor: '#A64D79' }}
-//                   >
-//                     {selectedBlog.category}
-//                   </div>
-//                   <div className="flex items-center space-x-4 text-gray-300">
-//                     <div className="flex items-center">
-//                       <User className="w-4 h-4 mr-1" />
-//                       {selectedBlog.author}
-//                     </div>
-//                     <div className="flex items-center">
-//                       <Calendar className="w-4 h-4 mr-1" />
-//                       {new Date(selectedBlog.date).toLocaleDateString()}
-//                     </div>
-//                   </div>
-//                 </div>
-                
-//                 <h2 className="text-3xl font-bold text-white mb-6">
-//                   {selectedBlog.title}
-//                 </h2>
-                
-//                 <div className="text-gray-300 leading-relaxed mb-8">
-//                   {selectedBlog.content}
-//                 </div>
-                
-//                 {/* Like and Comment Actions */}
-//                 <div className="flex items-center space-x-6 mb-8">
-//                   <button
-//                     onClick={() => handleLike(selectedBlog.id)}
-//                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-//                       likedBlogs.has(selectedBlog.id)
-//                         ? 'text-red-400'
-//                         : 'text-gray-400 hover:text-red-400'
-//                     }`}
-//                     style={{ backgroundColor: '#3B1C32' }}
-//                   >
-//                     <Heart 
-//                       className={`w-5 h-5 ${likedBlogs.has(selectedBlog.id) ? 'fill-current' : ''}`} 
-//                     />
-//                     <span>{blogLikes[selectedBlog.id]}</span>
-//                   </button>
-                  
-//                   <button
-//                     onClick={() => setShowComments(!showComments)}
-//                     className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:text-white transition-all duration-300"
-//                     style={{ backgroundColor: '#3B1C32' }}
-//                   >
-//                     <MessageCircle className="w-5 h-5" />
-//                     <span>Comments ({(comments[selectedBlog.id] || []).length})</span>
-//                   </button>
-//                 </div>
-                
-//                 {/* Comments Section */}
-//                 <AnimatePresence>
-//                   {showComments && (
-//                     <motion.div
-//                       initial={{ opacity: 0, height: 0 }}
-//                       animate={{ opacity: 1, height: 'auto' }}
-//                       exit={{ opacity: 0, height: 0 }}
-//                       className="border-t pt-6"
-//                       style={{ borderColor: '#3B1C32' }}
-//                     >
-//                       <h3 className="text-xl font-bold text-white mb-4">Comments</h3>
-                      
-//                       {/* Add Comment */}
-//                       <div className="mb-6">
-//                         <textarea
-//                           value={newComment}
-//                           onChange={(e) => setNewComment(e.target.value)}
-//                           placeholder="Write a comment..."
-//                           className="w-full p-3 rounded-lg bg-opacity-50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 resize-none"
-//                           style={{ backgroundColor: '#3B1C32', borderColor: '#6A1E55' }}
-//                           rows="3"
-//                         />
-//                         <button
-//                           onClick={() => handleAddComment(selectedBlog.id)}
-//                           className="mt-3 px-6 py-2 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105"
-//                           style={{ backgroundColor: '#A64D79' }}
-//                         >
-//                           Post Comment
-//                         </button>
-//                       </div>
-                      
-//                       {/* Comments List */}
-//                       <div className="space-y-4">
-//                         {(comments[selectedBlog.id] || []).map((comment) => (
-//                           <motion.div
-//                             key={comment.id}
-//                             initial={{ opacity: 0, y: 20 }}
-//                             animate={{ opacity: 1, y: 0 }}
-//                             className="p-4 rounded-lg"
-//                             style={{ backgroundColor: '#3B1C32' }}
-//                           >
-//                             <div className="flex items-center justify-between mb-2">
-//                               <span className="font-medium text-white">{comment.author}</span>
-//                               <span className="text-gray-400 text-sm">{comment.date}</span>
-//                             </div>
-//                             <p className="text-gray-300">{comment.text}</p>
-//                           </motion.div>
-//                         ))}
-//                       </div>
-//                     </motion.div>
-//                   )}
-//                 </AnimatePresence>
-//               </div>
-//             </motion.div>
-//           </motion.div>
-//         )}
-//       </AnimatePresence>
-//     </div>
-//   );
-// };
-
-// export default Blogs;
 
 
-import React, { useState, useEffect } from 'react';
-import { Heart, MessageCircle, Eye, Calendar, Search, Filter, User, Clock } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, MessageCircle, X, ChevronLeft, ChevronRight, Filter, Calendar, User, Eye, Send, Loader } from 'lucide-react';
+
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [categories, setCategories] = useState(['All']);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [pagination, setPagination] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [sortBy, setSortBy] = useState('createdAt');
-  const [commentText, setCommentText] = useState({});
-  const [showComments, setShowComments] = useState({});
+  const [showComments, setShowComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [blogViews, setBlogViews] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const categories = [
-    'Technology', 'Health', 'Travel', 'Food', 'Lifestyle',
-    'Education', 'Sports', 'Entertainment', 'Business', 'Other'
-  ];
+  const blogsPerPage = 9;
 
+  // Check authentication status and get current user
   useEffect(() => {
-    fetchBlogs();
-  }, [selectedCategory, sortBy, searchTerm]);
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    const userName = localStorage.getItem('userName') || localStorage.getItem('name');
+    
+    console.log('Auth check:', { token: !!token, userId, userName }); // Debug log
+    
+    if (token) {
+      setIsAuthenticated(true);
+      setCurrentUser({ id: userId, name: userName });
+    } else {
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+    }
+  }, []);
 
-  const fetchBlogs = async () => {
+  // Show better error messages
+  const showError = (message) => {
+    setError(message);
+    setTimeout(() => setError(''), 5000); // Clear error after 5 seconds
+  };
+
+  // Show success message
+  const showSuccess = (message) => {
+    // You can implement a success message state similar to error
+    console.log('Success:', message);
+  };
+
+  // Get auth headers
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('token');
+    return {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+  };
+
+  // Fetch blogs from API
+  const fetchBlogs = async (page = 1, category = 'All', search = '') => {
     try {
       setLoading(true);
-      const params = new URLSearchParams();
-      if (selectedCategory) params.append('category', selectedCategory);
-      if (sortBy) params.append('sortBy', sortBy);
-      if (searchTerm) params.append('search', searchTerm);
+      setError('');
       
-      const response = await fetch(`/api/blogs?${params.toString()}`);
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: blogsPerPage.toString(),
+        sortBy: 'createdAt',
+        order: 'desc'
+      });
+      
+      if (category !== 'All') params.append('category', category);
+      if (search) params.append('search', search);
+      
+      const response = await fetch(`${API_BASE_URL}/blogs?${params}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       
       if (data.success) {
         setBlogs(data.blogs);
+        setPagination(data.pagination);
+        
+        // Extract unique categories
+        const uniqueCategories = ['All', ...new Set(data.blogs.map(blog => blog.category))];
+        setCategories(uniqueCategories);
+        
+        // Initialize view counts
+        const viewCounts = {};
+        data.blogs.forEach(blog => {
+          viewCounts[blog._id] = blog.views || 0;
+        });
+        setBlogViews(viewCounts);
       } else {
-        setError(data.message || 'Failed to fetch blogs');
+        showError(data.message || 'Failed to fetch blogs');
       }
     } catch (error) {
-      setError('Network error. Please try again.');
       console.error('Error fetching blogs:', error);
+      showError('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLike = async (blogId) => {
+  // Fetch single blog with comments
+  const fetchBlogDetail = async (blogId) => {
     try {
-      const response = await fetch(`/api/blogs/${blogId}/like`, {
+      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setSelectedBlog(data.blog);
+        // Update view count in local state
+        setBlogViews(prev => ({
+          ...prev,
+          [blogId]: data.blog.views || 0
+        }));
+      } else {
+        showError(data.message || 'Failed to fetch blog details');
+      }
+    } catch (error) {
+      console.error('Error fetching blog details:', error);
+      showError('Network error. Please try again.');
+    }
+  };
+
+  // Toggle like - Fixed to work with backend response
+  const handleLike = async (blogId) => {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      showError('Please login to like blogs');
+      return;
+    }
+
+    if (likeLoading) return; // Prevent multiple clicks
+
+    try {
+      setLikeLoading(true);
+      
+      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/like`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
-
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      
       if (data.success) {
-        setBlogs(blogs.map(blog => 
-          blog._id === blogId 
-            ? { ...blog, likes: data.isLiked 
-                ? [...blog.likes, 'current-user'] 
-                : blog.likes.filter(id => id !== 'current-user') }
-            : blog
-        ));
+        // Update the blog in the blogs list
+        setBlogs(prevBlogs => 
+          prevBlogs.map(blog => {
+            if (blog._id === blogId) {
+              const updatedLikes = data.isLiked 
+                ? [...(blog.likes || []), currentUser.id]
+                : (blog.likes || []).filter(id => id !== currentUser.id);
+              
+              return { 
+                ...blog, 
+                likes: updatedLikes
+              };
+            }
+            return blog;
+          })
+        );
+        
+        // Update selected blog if it's open
+        if (selectedBlog && selectedBlog._id === blogId) {
+          const updatedLikes = data.isLiked 
+            ? [...(selectedBlog.likes || []), currentUser.id]
+            : (selectedBlog.likes || []).filter(id => id !== currentUser.id);
+          
+          setSelectedBlog(prev => ({ 
+            ...prev, 
+            likes: updatedLikes
+          }));
+        }
+        
+        showSuccess(data.message || (data.isLiked ? 'Blog liked!' : 'Blog unliked!'));
+      } else {
+        showError(data.message || 'Failed to like blog');
       }
     } catch (error) {
-      console.error('Error toggling like:', error);
+      console.error('Error liking blog:', error);
+      showError('Network error. Please try again.');
+    } finally {
+      setLikeLoading(false);
     }
   };
 
-  const handleComment = async (blogId) => {
-    const content = commentText[blogId];
-    if (!content || content.trim() === '') return;
+  // Add comment - Fixed to work with backend response
+  const handleAddComment = async (blogId) => {
+    if (!isAuthenticated) {
+      showError('Please login to comment');
+      return;
+    }
+
+    if (!newComment.trim()) {
+      showError('Please enter a comment');
+      return;
+    }
+
+    if (commentLoading) return; // Prevent multiple submissions
 
     try {
-      const response = await fetch(`/api/blogs/${blogId}/comments`, {
+      setCommentLoading(true);
+      
+      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/comments`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ content })
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ content: newComment.trim() })
       });
-
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      
       if (data.success) {
-        setBlogs(blogs.map(blog => 
-          blog._id === blogId 
-            ? { ...blog, comments: [...blog.comments, data.comment] }
-            : blog
-        ));
-        setCommentText({ ...commentText, [blogId]: '' });
+        // Update the selected blog with the new comment
+        if (selectedBlog && selectedBlog._id === blogId) {
+          setSelectedBlog(prev => ({
+            ...prev,
+            comments: [...(prev.comments || []), data.comment]
+          }));
+        }
+        
+        // Update the comment count in the blogs list
+        setBlogs(prevBlogs => 
+          prevBlogs.map(blog => 
+            blog._id === blogId 
+              ? { 
+                  ...blog, 
+                  comments: [...(blog.comments || []), data.comment]
+                }
+              : blog
+          )
+        );
+        
+        setNewComment('');
+        showSuccess(data.message || 'Comment added successfully!');
+      } else {
+        showError(data.message || 'Failed to add comment');
       }
     } catch (error) {
       console.error('Error adding comment:', error);
+      showError('Network error. Please try again.');
+    } finally {
+      setCommentLoading(false);
     }
   };
 
-  const toggleComments = (blogId) => {
-    setShowComments({ ...showComments, [blogId]: !showComments[blogId] });
+  // Initial load
+  useEffect(() => {
+    fetchBlogs(currentPage, selectedCategory, searchTerm);
+  }, [currentPage, selectedCategory, searchTerm]);
+
+  // Handle category change
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
+  // Handle search
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  // Handle page change
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Handle blog click
+  const handleBlogClick = (blog) => {
+    fetchBlogDetail(blog._id);
+  };
+
+  // Format date
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric'
     });
   };
 
-  const truncateContent = (content, wordLimit = 30) => {
-    const words = content.split(' ');
-    if (words.length <= wordLimit) return content;
-    return words.slice(0, wordLimit).join(' ') + '...';
+  // Check if user has liked a blog - Fixed to work with backend data
+  const hasUserLiked = (blog) => {
+    if (!currentUser || !blog.likes) return false;
+    
+    // Check if user ID is in the likes array
+    return Array.isArray(blog.likes) && blog.likes.includes(currentUser.id);
   };
 
-  return (
-    <div className="max-w-7xl mx-auto p-6">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">All Blogs</h1>
-        <p className="text-gray-600">Discover amazing stories and insights from our community</p>
-      </div>
+  // Get like count - Fixed to work with backend data
+  const getLikeCount = (blog) => {
+    if (!blog.likes) return 0;
+    return Array.isArray(blog.likes) ? blog.likes.length : 0;
+  };
 
-      {/* Search and Filter Bar */}
-      <div className="mb-8 bg-white rounded-lg shadow-sm p-6">
-        <div className="flex flex-col lg:flex-row gap-4">
-          {/* Search */}
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+  // Get comment count - Fixed to work with backend data
+  const getCommentCount = (blog) => {
+    if (!blog.comments) return 0;
+    return Array.isArray(blog.comments) ? blog.comments.length : 0;
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+    hover: { 
+      y: -10, 
+      transition: { duration: 0.3 } 
+    }
+  };
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.3 }
+    },
+    exit: { 
+      opacity: 0, 
+      scale: 0.8,
+      transition: { duration: 0.2 }
+    }
+  };
+
+  if (loading && blogs.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 flex items-center justify-center">
+        <div className="text-center">
+          <Loader className="w-12 h-12 text-white animate-spin mx-auto mb-4" />
+          <p className="text-white text-lg">Loading blogs...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Our Blog
+          </h1>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            Discover insights, tips, and stories from our community of experts
+          </p>
+        </motion.div>
+
+        {/* Search and Filter */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8 space-y-4"
+        >
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto">
             <input
               type="text"
-              placeholder="Search blogs..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              onChange={handleSearch}
+              placeholder="Search blogs..."
+              className="w-full px-4 py-3 rounded-lg bg-gray-800 bg-opacity-50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
           {/* Category Filter */}
-          <div className="relative">
-            <Filter className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="">All Categories</option>
-              {categories.map(category => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryChange(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-gray-800 bg-opacity-50 text-gray-400 hover:text-white hover:bg-purple-600'
+                }`}
+              >
+                <Filter className="w-4 h-4 inline mr-1" />
+                {category}
+              </button>
+            ))}
           </div>
+        </motion.div>
 
-          {/* Sort By */}
-          <div>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="createdAt">Latest</option>
-              <option value="views">Most Viewed</option>
-              <option value="likes">Most Liked</option>
-            </select>
-          </div>
-        </div>
-      </div>
+        {/* Error Message */}
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-red-500 bg-opacity-20 border border-red-500 text-red-300 px-4 py-3 rounded-lg mb-6 text-center"
+          >
+            {error}
+          </motion.div>
+        )}
 
-      {error && (
-        <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-          {error}
-        </div>
-      )}
-
-      {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      ) : blogs.length === 0 ? (
-        <div className="text-center py-12">
-          <h3 className="text-lg font-medium text-gray-700 mb-2">No blogs found</h3>
-          <p className="text-gray-500">Try adjusting your search or filter criteria</p>
-        </div>
-      ) : (
-        <div className="grid gap-8">
-          {blogs.map(blog => (
-            <article key={blog._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div className="lg:flex">
-                {/* Image */}
-                <div className="lg:w-1/3">
+        {/* Blog Grid */}
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+        >
+          <AnimatePresence mode="wait">
+            {blogs.map((blog, index) => (
+              <motion.div
+                key={blog._id}
+                layout
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                whileHover="hover"
+                transition={{ delay: index * 0.1 }}
+                className="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-lg overflow-hidden shadow-xl border border-gray-700"
+              >
+                <div className="relative">
                   <img
-                    src={blog.image.url}
+                    src={blog.image?.url || '/placeholder-image.jpg'}
                     alt={blog.title}
-                    className="w-full h-64 lg:h-full object-cover"
+                    className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      e.target.src = '/placeholder-image.jpg';
+                    }}
                   />
+                  <div className="absolute top-3 left-3 px-2 py-1 bg-purple-600 rounded-full text-xs font-medium text-white">
+                    {blog.category}
+                  </div>
+                  <div className="absolute top-3 right-3 px-2 py-1 bg-black bg-opacity-50 rounded-full text-xs font-medium text-white flex items-center">
+                    <Eye className="w-3 h-3 mr-1" />
+                    {blogViews[blog._id] || blog.views || 0}
+                  </div>
                 </div>
-
-                {/* Content */}
-                <div className="lg:w-2/3 p-6">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-4">
-                      <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
-                        {blog.category}
-                      </span>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        {formatDate(blog.createdAt)}
-                      </div>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {blog.readTime} min read
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h2 className="text-2xl font-bold text-gray-800 mb-3 line-clamp-2">
+                
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
                     {blog.title}
-                  </h2>
-
-                  {/* Author */}
-                  <div className="flex items-center mb-3">
-                    <User className="h-4 w-4 text-gray-400 mr-2" />
-                    <span className="text-sm text-gray-600">
-                      By {blog.author?.name || 'Anonymous'}
-                    </span>
+                  </h3>
+                  
+                  <div className="flex items-center text-gray-300 text-sm mb-4 space-x-4">
+                    <div className="flex items-center">
+                      <User className="w-4 h-4 mr-1" />
+                      {blog.author?.name || 'Unknown'}
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {formatDate(blog.createdAt)}
+                    </div>
                   </div>
 
-                  {/* Content Preview */}
-                  <p className="text-gray-700 mb-4 line-clamp-3">
-                    {truncateContent(blog.content, 40)}
-                  </p>
-
-                  {/* Tags */}
-                  {blog.tags && blog.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {blog.tags.slice(0, 5).map(tag => (
-                        <span key={tag} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                          #{tag}
-                        </span>
-                      ))}
-                      {blog.tags.length > 5 && (
-                        <span className="text-gray-500 text-xs">+{blog.tags.length - 5} more</span>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Stats and Actions */}
+                  <div className="text-gray-400 text-sm mb-4 line-clamp-3">
+                    {blog.content ? blog.content.substring(0, 120) + '...' : 'No content available'}
+                  </div>
+                  
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-6 text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <Eye className="h-4 w-4 mr-1" />
-                        {blog.views}
-                      </div>
-                      <div className="flex items-center">
-                        <Heart className="h-4 w-4 mr-1" />
-                        {blog.likes?.length || 0}
-                      </div>
-                      <div className="flex items-center">
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        {blog.comments?.length || 0}
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => handleBlogClick(blog)}
+                      className="flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105"
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      Read More
+                    </button>
+                    
+                    <div className="flex items-center space-x-4 text-gray-300">
                       <button
                         onClick={() => handleLike(blog._id)}
-                        className="flex items-center px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                        disabled={likeLoading}
+                        className={`flex items-center hover:text-red-400 transition-colors ${
+                          hasUserLiked(blog) ? 'text-red-400' : ''
+                        } ${likeLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                       >
-                        <Heart className="h-4 w-4 mr-1" />
-                        Like
+                        <Heart 
+                          className={`w-4 h-4 mr-1 ${hasUserLiked(blog) ? 'fill-current' : ''}`} 
+                        />
+                        {getLikeCount(blog)}
                       </button>
-                      <button
-                        onClick={() => toggleComments(blog._id)}
-                        className="flex items-center px-3 py-1 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                      >
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        Comments
-                      </button>
+                      <span className="flex items-center">
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        {getCommentCount(blog)}
+                      </span>
                     </div>
                   </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
-                  {/* Comments Section */}
-                  {showComments[blog._id] && (
-                    <div className="mt-6 pt-4 border-t border-gray-200">
-                      {/* Add Comment */}
-                      <div className="mb-4">
-                        <div className="flex space-x-3">
-                          <input
-                            type="text"
-                            placeholder="Add a comment..."
-                            value={commentText[blog._id] || ''}
-                            onChange={(e) => setCommentText({ ...commentText, [blog._id]: e.target.value })}
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                          <button
-                            onClick={() => handleComment(blog._id)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
-                          >
-                            Post
-                          </button>
-                        </div>
-                      </div>
+        {/* Pagination */}
+        {pagination.totalPages > 1 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="flex justify-center items-center space-x-4"
+          >
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={!pagination.hasPrev}
+              className={`p-2 rounded-lg transition-all duration-300 ${
+                !pagination.hasPrev
+                  ? 'text-gray-600 cursor-not-allowed bg-gray-800' 
+                  : 'text-white bg-purple-600 hover:bg-purple-700 hover:scale-110'
+              }`}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            
+            <div className="flex space-x-2">
+              {[...Array(pagination.totalPages)].map((_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`w-10 h-10 rounded-lg font-medium transition-all duration-300 ${
+                    currentPage === index + 1
+                      ? 'bg-purple-600 text-white scale-110'
+                      : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-purple-600'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+            
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={!pagination.hasNext}
+              className={`p-2 rounded-lg transition-all duration-300 ${
+                !pagination.hasNext
+                  ? 'text-gray-600 cursor-not-allowed bg-gray-800' 
+                  : 'text-white bg-purple-600 hover:bg-purple-700 hover:scale-110'
+              }`}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </motion.div>
+        )}
+      </div>
 
-                      {/* Comments List */}
-                      <div className="space-y-3 max-h-64 overflow-y-auto">
-                        {blog.comments?.map(comment => (
-                          <div key={comment._id} className="bg-gray-50 rounded-lg p-3">
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="font-medium text-sm text-gray-800">
-                                {comment.user?.name || 'Anonymous'}
-                              </span>
-                              <span className="text-xs text-gray-500">
-                                {formatDate(comment.createdAt)}
-                              </span>
-                            </div>
-                            <p className="text-gray-700 text-sm">{comment.content}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedBlog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50"
+            onClick={() => setSelectedBlog(null)}
+          >
+            <motion.div
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="bg-gray-900 max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <img
+                  src={selectedBlog.image?.url || '/placeholder-image.jpg'}
+                  alt={selectedBlog.title}
+                  className="w-full h-64 object-cover"
+                  onError={(e) => {
+                    e.target.src = '/placeholder-image.jpg';
+                  }}
+                />
+                <button
+                  onClick={() => setSelectedBlog(null)}
+                  className="absolute top-4 right-4 p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-70 transition-all duration-300"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="absolute bottom-4 right-4 px-3 py-1 bg-black bg-opacity-50 rounded-full text-white text-sm flex items-center">
+                  <Eye className="w-4 h-4 mr-1" />
+                  {selectedBlog.views || 0} views
                 </div>
               </div>
-            </article>
-          ))}
-        </div>
-      )}
+              
+              <div className="p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="px-3 py-1 bg-purple-600 rounded-full text-sm font-medium text-white">
+                    {selectedBlog.category}
+                  </div>
+                  <div className="flex items-center space-x-4 text-gray-300">
+                    <div className="flex items-center">
+                      <User className="w-4 h-4 mr-1" />
+                      {selectedBlog.author?.name || 'Unknown'}
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {formatDate(selectedBlog.createdAt)}
+                    </div>
+                  </div>
+                </div>
+                
+                <h2 className="text-3xl font-bold text-white mb-6">
+                  {selectedBlog.title}
+                </h2>
+                
+                <div className="text-gray-300 leading-relaxed mb-8 whitespace-pre-wrap">
+                  {selectedBlog.content || 'No content available'}
+                </div>
+                
+                {/* Like and Comment Actions */}
+                <div className="flex items-center space-x-6 mb-8">
+                  <button
+                    onClick={() => handleLike(selectedBlog._id)}
+                    disabled={likeLoading}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
+                      hasUserLiked(selectedBlog)
+                        ? 'bg-red-600 text-white'
+                        : 'bg-gray-800 text-gray-400 hover:text-red-400'
+                    } ${likeLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <Heart 
+                      className={`w-5 h-5 ${hasUserLiked(selectedBlog) ? 'fill-current' : ''}`} 
+                    />
+                    <span>{getLikeCount(selectedBlog)}</span>
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowComments(!showComments)}
+                    className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white transition-all duration-300"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    <span>Comments ({getCommentCount(selectedBlog)})</span>
+                  </button>
+                </div>
+                
+                {/* Comments Section */}
+                <AnimatePresence>
+                  {showComments && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="border-t border-gray-700 pt-6"
+                    >
+                      <h3 className="text-xl font-bold text-white mb-4">Comments</h3>
+                      
+                      {/* Add Comment */}
+                      {isAuthenticated ? (
+                        <div className="mb-6">
+                          <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            placeholder="Write a comment..."
+                            className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                            rows="3"
+                          />
+                          <button
+                            onClick={() => handleAddComment(selectedBlog._id)}
+                            disabled={commentLoading || !newComment.trim()}
+                            className="mt-3 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {commentLoading ? (
+                              <Loader className="w-4 h-4 mr-2 animate-spin" />
+                            ) : (
+                              <Send className="w-4 h-4 mr-2" />
+                            )}
+                            Post Comment
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="mb-6 p-4 bg-gray-800 rounded-lg text-center">
+                          <p className="text-gray-300">Please login to comment</p>
+                        </div>
+                      )}
+                      
+                      {/* Comments List */}
+                      <div className="space-y-4">
+                        {selectedBlog.comments && selectedBlog.comments.length > 0 ? (
+                          selectedBlog.comments.map((comment) => (
+                            <motion.div
+                              key={comment._id}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="p-4 bg-gray-800 rounded-lg"
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="font-medium text-white">
+                                  {comment.user?.name || 'Anonymous'}
+                                </span>
+                                <span className="text-gray-400 text-sm">
+                                  {formatDate(comment.createdAt)}
+                                </span>
+                              </div>
+                              <p className="text-gray-300">{comment.content}</p>
+                            </motion.div>
+                          ))
+                        ) : (
+                          <div className="text-center py-8">
+                            <MessageCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                            <p className="text-gray-400">No comments yet. Be the first to comment!</p>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

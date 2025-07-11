@@ -364,7 +364,7 @@ const getUserBlogs = async (req, res) => {
 const toggleLike = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id;
+    const userId = req.user.userId || req.user.id;
 
     const blog = await Blog.findById(id);
 
@@ -425,7 +425,7 @@ const addComment = async (req, res) => {
     }
 
     const comment = {
-      user: req.user.id,
+      user:req.user.userId,
       content: content.trim(),
       createdAt: new Date()
     };
