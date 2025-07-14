@@ -44,6 +44,7 @@ import { User, FileText, PlusCircle, BookOpen, LogOut, Menu, X } from 'lucide-re
 import ProfilePage from '../components/Profile';
 import BlogsPage from '../components/Blogs';
 import CreateBlogPage from '../components/CreateBlogs';
+import MyBlogsPage from '../components/MyBlogs';
 
 // Animation variants
 const pageVariants = {
@@ -190,20 +191,7 @@ const MyBlogs = () => (
     animate="visible"
     exit="exit"
   >
-    <motion.h2 
-      className="text-2xl font-bold text-white mb-4"
-      variants={itemVariants}
-    >
-      My Blogs
-    </motion.h2>
-    <motion.div 
-      className="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg shadow-xl p-6 border border-white border-opacity-20"
-      variants={cardVariants}
-      whileHover={{ scale: 1.02, y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-    >
-      <p className="text-gray-200">Manage your published blogs.</p>
-    </motion.div>
+    <MyBlogsPage/>
   </motion.div>
 );
 
