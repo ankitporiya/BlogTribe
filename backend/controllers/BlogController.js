@@ -543,12 +543,14 @@ const Blog = require('../models/Blog');
 const User = require('../models/User');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'durgwjdlg',
-  api_key: process.env.CLOUDINARY_API_KEY || 482348242763615,
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'lPlc02hpwS0rRmkSwXbAJy9JDIA'
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME ,
+  api_key: process.env.CLOUDINARY_API_KEY ,
+  api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
 // Configure multer for file uploads
