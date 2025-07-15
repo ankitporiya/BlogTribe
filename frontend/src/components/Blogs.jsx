@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, MessageCircle, X, ChevronLeft, ChevronRight, Filter, Calendar, User, Eye, Send, Loader } from 'lucide-react';
@@ -354,7 +352,7 @@ const Blogs = () => {
 
   if (loading && blogs.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Loader className="w-12 h-12 text-white animate-spin mx-auto mb-4" />
           <p className="text-white text-lg">Loading blogs...</p>
@@ -364,7 +362,7 @@ const Blogs = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
+    <div className="min-h-screen ">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -406,8 +404,8 @@ const Blogs = () => {
                 onClick={() => handleCategoryChange(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-purple-600 text-white'
-                    : 'bg-gray-800 bg-opacity-50 text-gray-400 hover:text-white hover:bg-purple-600'
+                    ? 'bg-[#A64D79] text-white'
+                    : 'bg-gray-800 bg-opacity-50 text-gray-400 hover:text-white hover:bg-[#1A1A1D]'
                 }`}
               >
                 <Filter className="w-4 h-4 inline mr-1" />
@@ -455,7 +453,7 @@ const Blogs = () => {
                       e.target.src = '/placeholder-image.jpg';
                     }}
                   />
-                  <div className="absolute top-3 left-3 px-2 py-1 bg-purple-600 rounded-full text-xs font-medium text-white">
+                  <div className="absolute top-3 left-3 px-2 py-1 bg-[#A64D79] rounded-full text-xs font-medium text-white">
                     {blog.category}
                   </div>
                   <div className="absolute top-3 right-3 px-2 py-1 bg-black bg-opacity-50 rounded-full text-xs font-medium text-white flex items-center">
@@ -487,7 +485,7 @@ const Blogs = () => {
                   <div className="flex items-center justify-between">
                     <button
                       onClick={() => handleBlogClick(blog)}
-                      className="flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105"
+                      className="flex items-center px-4 py-2 bg-[#A64D79] hover:bg-[#1A1A1D] rounded-lg text-white font-medium transition-all duration-300 hover:scale-105"
                     >
                       <Eye className="w-4 h-4 mr-2" />
                       Read More
@@ -532,7 +530,7 @@ const Blogs = () => {
               className={`p-2 rounded-lg transition-all duration-300 ${
                 !pagination.hasPrev
                   ? 'text-gray-600 cursor-not-allowed bg-gray-800' 
-                  : 'text-white bg-purple-600 hover:bg-purple-700 hover:scale-110'
+                  : 'text-white bg-[#A64D79] hover:bg-[#1A1A1D] hover:scale-110'
               }`}
             >
               <ChevronLeft className="w-5 h-5" />
@@ -545,8 +543,8 @@ const Blogs = () => {
                   onClick={() => handlePageChange(index + 1)}
                   className={`w-10 h-10 rounded-lg font-medium transition-all duration-300 ${
                     currentPage === index + 1
-                      ? 'bg-purple-600 text-white scale-110'
-                      : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-purple-600'
+                      ? 'bg-[#A64D79] text-white scale-110'
+                      : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-[#1A1A1D]'
                   }`}
                 >
                   {index + 1}
@@ -560,7 +558,7 @@ const Blogs = () => {
               className={`p-2 rounded-lg transition-all duration-300 ${
                 !pagination.hasNext
                   ? 'text-gray-600 cursor-not-allowed bg-gray-800' 
-                  : 'text-white bg-purple-600 hover:bg-purple-700 hover:scale-110'
+                  : 'text-white bg-[#A64D79] hover:bg-[#1A1A1D] hover:scale-110'
               }`}
             >
               <ChevronRight className="w-5 h-5" />
@@ -584,7 +582,7 @@ const Blogs = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="bg-gray-900 max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl"
+              className="bg-[#1A1A1D] max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
@@ -610,7 +608,7 @@ const Blogs = () => {
               
               <div className="p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <div className="px-3 py-1 bg-purple-600 rounded-full text-sm font-medium text-white">
+                  <div className="px-3 py-1 bg-[#A64D79] rounded-full text-sm font-medium text-white">
                     {selectedBlog.category}
                   </div>
                   <div className="flex items-center space-x-4 text-gray-300">
@@ -677,13 +675,13 @@ const Blogs = () => {
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder="Write a comment..."
-                            className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                            className="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#A64D79] resize-none"
                             rows="3"
                           />
                           <button
                             onClick={() => handleAddComment(selectedBlog._id)}
                             disabled={commentLoading || !newComment.trim()}
-                            className="mt-3 px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="mt-3 px-6 py-2 bg-[#A64D79] hover:bg-[#1A1A1D] rounded-lg text-white font-medium transition-all duration-300 hover:scale-105 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             {commentLoading ? (
                               <Loader className="w-4 h-4 mr-2 animate-spin" />

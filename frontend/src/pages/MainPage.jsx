@@ -185,7 +185,7 @@ const CreateBlog = () => (
 const MyBlogs = () => (
   <motion.div 
     className="p-6 min-h-screen" 
-    style={{ background: 'linear-gradient(135deg, #6A1E55 0%, #A64D79 100%)' }}
+    style={{ background: 'linear-gradient(135deg, #1A1A1D 0%, #6A1E55 100%)' }}
     variants={contentVariants}
     initial="hidden"
     animate="visible"
