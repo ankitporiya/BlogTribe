@@ -658,6 +658,7 @@
 ////////////////charts/////
 
 import React, { useState, useEffect, useRef } from 'react';
+import Storage from '../components/Storage';
 import { useAuth } from '../components/AuthProvider';
 import { 
   Shield, 
@@ -1276,6 +1277,7 @@ const AdminPanel = () => {
                     </div>
                   </div>
                 </div>
+                  <Storage/>
               </div>
             ) : (
               <div className="text-center py-12">

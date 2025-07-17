@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const authRoutes = require('./routes/auth');
 const BlogRoutes = require('./routes/BlogRoutes');
+const storageRoutes = require('./routes/storage');
 // Load environment variables
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/blogs', BlogRoutes);
-
+app.use('/api/storage', storageRoutes);
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ 
