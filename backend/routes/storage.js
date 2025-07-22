@@ -9,7 +9,7 @@ const router = express.Router();
 // Rate limiting for storage routes
 const storageLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 50, // limit each IP to 50 requests per windowMs
+  max: 500, // limit each IP to 50 requests per windowMs
   message: {
     success: false,
     message: 'Too many storage requests, please try again later'
