@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 // 1. Add this import at the top with other imports
 // import { Heart, MessageCircle, X, ChevronLeft, ChevronRight, Filter, Calendar, User, Eye, Send, Loader, Brain } from 'lucide-react';
-import AI from "../components/AI"; // Add this import
+import AI from "../components/AI"; 
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Blogs = () => {
   // 2. Add these two new state variables in the Blogs component (add them with other useState declarations)
@@ -105,7 +105,7 @@ const Blogs = () => {
       if (category !== "All") params.append("category", category);
       if (search) params.append("search", search);
 
-      const response = await fetch(`${API_BASE_URL}/blogs?${params}`);
+      const response = await fetch(`${API_BASE_URL}/api/blogs?${params}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -144,7 +144,7 @@ const Blogs = () => {
   // Fetch single blog with comments
   const fetchBlogDetail = async (blogId) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}`);
+      const response = await fetch(`${API_BASE_URL}/api/blogs/${blogId}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -182,7 +182,7 @@ const Blogs = () => {
     try {
       setLikeLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/like`, {
+      const response = await fetch(`${API_BASE_URL}/api/blogs/${blogId}/like`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -257,7 +257,7 @@ const Blogs = () => {
     try {
       setCommentLoading(true);
 
-      const response = await fetch(`${API_BASE_URL}/blogs/${blogId}/comments`, {
+      const response = await fetch(`${API_BASE_URL}/api/blogs/${blogId}/comments`, {
         method: "POST",
         headers: getAuthHeaders(),
         body: JSON.stringify({ content: newComment.trim() }),

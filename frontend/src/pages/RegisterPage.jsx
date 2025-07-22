@@ -1,409 +1,32 @@
-// // RegisterPage.jsx
-// import React, { useState } from 'react';
-// import { useAuth } from '../components/AuthProvider';
-// import { Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
-
-// const RegisterPage = ({ onSwitchToLogin }) => {
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     phone: '',
-//     password: '',
-//     confirmPassword: ''
-//   });
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState('');
-//   const { register } = useAuth();
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setError('');
-
-//     if (formData.password !== formData.confirmPassword) {
-//       setError('Passwords do not match');
-//       setLoading(false);
-//       return;
-//     }
-
-//     const result = await register({
-//       name: formData.name,
-//       email: formData.email,
-//       phone: formData.phone,
-//       password: formData.password
-//     });
-
-//     if (!result.success) {
-//       setError(result.message);
-//     }
-
-//     setLoading(false);
-//   };
-
-//   const handleChange = (e) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   return (
-//     <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-//       <div className="text-center mb-6">
-//         <h2 className="text-2xl font-bold text-gray-800">Join BlogTribe</h2>
-//         <p className="text-gray-600 mt-2">Create your account to start blogging.</p>
-//       </div>
-
-//       {error && (
-//         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-//           {error}
-//         </div>
-//       )}
-
-//       <form onSubmit={handleSubmit} className="space-y-4">
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-//           <div className="relative">
-//             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="text"
-//               name="name"
-//               value={formData.name}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your full name"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-//           <div className="relative">
-//             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your email"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-//           <div className="relative">
-//             <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="tel"
-//               name="phone"
-//               value={formData.phone}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your phone number"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-//           <div className="relative">
-//             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your password"
-//               required
-//             />
-//             <button
-//               type="button"
-//               onClick={() => setShowPassword(!showPassword)}
-//               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-//             >
-//               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-//             </button>
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-//           <div className="relative">
-//             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type={showConfirmPassword ? 'text' : 'password'}
-//               name="confirmPassword"
-//               value={formData.confirmPassword}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Confirm your password"
-//               required
-//             />
-//             <button
-//               type="button"
-//               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-//               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-//             >
-//               {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-//             </button>
-//           </div>
-//         </div>
-
-//         <button
-//           type="submit"
-//           disabled={loading}
-//           className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white py-2 px-4 rounded-lg transition-colors font-medium"
-//         >
-//           {loading ? 'Creating Account...' : 'Create Account'}
-//         </button>
-//       </form>
-
-//       <div className="mt-6 text-center">
-//         <p className="text-gray-600">
-//           Already have an account?{' '}
-//           <button
-//             onClick={onSwitchToLogin}
-//             className="text-blue-500 hover:text-blue-600 font-medium"
-//           >
-//             Sign in here
-//           </button>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RegisterPage;
-
-
-// //by navigate
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useAuth } from '../components/AuthProvider';
-// import { Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
-
-// const RegisterPage = () => {
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     phone: '',
-//     password: '',
-//     confirmPassword: ''
-//   });
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState('');
-//   const { register } = useAuth();
-//   const navigate = useNavigate(); // ✅ React Router hook
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setError('');
-
-//     if (formData.password !== formData.confirmPassword) {
-//       setError('Passwords do not match');
-//       setLoading(false);
-//       return;
-//     }
-
-//     const result = await register({
-//       name: formData.name,
-//       email: formData.email,
-//       phone: formData.phone,
-//       password: formData.password
-//     });
-
-//     if (!result.success) {
-//       setError(result.message);
-//     } else {
-//       navigate('/login'); // ✅ Redirect to login after successful registration
-//     }
-
-//     setLoading(false);
-//   };
-
-//   const handleChange = (e) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   return (
-//     <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-//       <div className="text-center mb-6">
-//         <h2 className="text-2xl font-bold text-gray-800">Join BlogTribe</h2>
-//         <p className="text-gray-600 mt-2">Create your account to start blogging.</p>
-//       </div>
-
-//       {error && (
-//         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-//           {error}
-//         </div>
-//       )}
-
-//       <form onSubmit={handleSubmit} className="space-y-4">
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-//           <div className="relative">
-//             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="text"
-//               name="name"
-//               value={formData.name}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your full name"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-//           <div className="relative">
-//             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="email"
-//               name="email"
-//               value={formData.email}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your email"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-//           <div className="relative">
-//             <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type="tel"
-//               name="phone"
-//               value={formData.phone}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your phone number"
-//               required
-//             />
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-//           <div className="relative">
-//             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type={showPassword ? 'text' : 'password'}
-//               name="password"
-//               value={formData.password}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Enter your password"
-//               required
-//             />
-//             <button
-//               type="button"
-//               onClick={() => setShowPassword(!showPassword)}
-//               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-//             >
-//               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-//             </button>
-//           </div>
-//         </div>
-
-//         <div>
-//           <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
-//           <div className="relative">
-//             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-//             <input
-//               type={showConfirmPassword ? 'text' : 'password'}
-//               name="confirmPassword"
-//               value={formData.confirmPassword}
-//               onChange={handleChange}
-//               className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-//               placeholder="Confirm your password"
-//               required
-//             />
-//             <button
-//               type="button"
-//               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-//               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-//             >
-//               {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-//             </button>
-//           </div>
-//         </div>
-
-//         <button
-//           type="submit"
-//           disabled={loading}
-//           className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white py-2 px-4 rounded-lg transition-colors font-medium"
-//         >
-//           {loading ? 'Creating Account...' : 'Create Account'}
-//         </button>
-//       </form>
-
-//       <div className="mt-6 text-center">
-//         <p className="text-gray-600">
-//           Already have an account?{' '}
-//           <button
-//             onClick={() => navigate('/login')} // ✅ Navigate to login
-//             className="text-blue-500 hover:text-blue-600 font-medium"
-//           >
-//             Sign in here
-//           </button>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RegisterPage;
-
-
-
-
-
-
-
-
-
 // animation
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../components/AuthProvider';
-import { Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthProvider";
+import { Eye, EyeOff, User, Mail, Phone, Lock } from "lucide-react";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate(); // ✅ React Router hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -412,13 +35,13 @@ const RegisterPage = () => {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      password: formData.password
+      password: formData.password,
     });
 
     if (!result.success) {
       setError(result.message);
     } else {
-      navigate('/login'); // ✅ Redirect to login after successful registration
+      navigate("/login"); // ✅ Redirect to login after successful registration
     }
 
     setLoading(false);
@@ -437,9 +60,9 @@ const RegisterPage = () => {
       transition: {
         duration: 0.6,
         ease: "easeOut",
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -447,44 +70,52 @@ const RegisterPage = () => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   const buttonVariants = {
     hover: {
       scale: 1.02,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.2 },
     },
     tap: {
       scale: 0.98,
-      transition: { duration: 0.1 }
-    }
+      transition: { duration: 0.1 },
+    },
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8" 
-         style={{ background: 'linear-gradient(135deg, #1A1A1D 0%, #3B1C32 50%, #6A1E55 100%)' }}>
+    <div
+      className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8"
+      style={{
+        background:
+          "linear-gradient(135deg, #1A1A1D 0%, #3B1C32 50%, #6A1E55 100%)",
+      }}
+    >
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         className="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10"
-        style={{ backgroundColor: '#1A1A1D', border: '1px solid #3B1C32' }}
+        style={{ backgroundColor: "#1A1A1D", border: "1px solid #3B1C32" }}
       >
-        <motion.div variants={itemVariants} className="text-center mb-6 sm:mb-8">
-          <motion.h2 
+        <motion.div
+          variants={itemVariants}
+          className="text-center mb-6 sm:mb-8"
+        >
+          <motion.h2
             className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3"
-            style={{ color: '#A64D79' }}
+            style={{ color: "#A64D79" }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             Join BlogTribe
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-sm sm:text-base lg:text-lg mt-2"
-            style={{ color: '#A64D79' }}
+            style={{ color: "#A64D79" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -499,10 +130,10 @@ const RegisterPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             className="border rounded-lg mb-4 sm:mb-6 px-4 py-3 text-sm sm:text-base"
-            style={{ 
-              backgroundColor: '#3B1C32', 
-              borderColor: '#6A1E55',
-              color: '#A64D79'
+            style={{
+              backgroundColor: "#3B1C32",
+              borderColor: "#6A1E55",
+              color: "#A64D79",
             }}
           >
             {error}! Create Strong Password
@@ -511,30 +142,34 @@ const RegisterPage = () => {
 
         <motion.form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <motion.div variants={itemVariants}>
-            <label className="block text-sm sm:text-base font-medium mb-2 lg:mb-3" 
-                   style={{ color: '#A64D79' }}>
+            <label
+              className="block text-sm sm:text-base font-medium mb-2 lg:mb-3"
+              style={{ color: "#A64D79" }}
+            >
               Full Name
             </label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5" 
-                    style={{ color: '#6A1E55' }} />
+              <User
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
+                style={{ color: "#6A1E55" }}
+              />
               <motion.input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 lg:py-4 rounded-lg outline-none text-sm sm:text-base transition-all duration-300 focus:ring-2"
-                style={{ 
-                  backgroundColor: '#3B1C32',
-                  borderColor: '#6A1E55',
-                  color: '#A64D79',
-                  border: '1px solid #6A1E55'
+                style={{
+                  backgroundColor: "#3B1C32",
+                  borderColor: "#6A1E55",
+                  color: "#A64D79",
+                  border: "1px solid #6A1E55",
                 }}
                 placeholder="Enter your full name"
                 required
                 whileFocus={{
                   scale: 1.02,
-                  boxShadow: '0 0 0 2px #A64D79'
+                  boxShadow: "0 0 0 2px #A64D79",
                 }}
                 transition={{ duration: 0.2 }}
               />
@@ -542,30 +177,34 @@ const RegisterPage = () => {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <label className="block text-sm sm:text-base font-medium mb-2 lg:mb-3" 
-                   style={{ color: '#A64D79' }}>
+            <label
+              className="block text-sm sm:text-base font-medium mb-2 lg:mb-3"
+              style={{ color: "#A64D79" }}
+            >
               Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5" 
-                    style={{ color: '#6A1E55' }} />
+              <Mail
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
+                style={{ color: "#6A1E55" }}
+              />
               <motion.input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 lg:py-4 rounded-lg outline-none text-sm sm:text-base transition-all duration-300 focus:ring-2"
-                style={{ 
-                  backgroundColor: '#3B1C32',
-                  borderColor: '#6A1E55',
-                  color: '#A64D79',
-                  border: '1px solid #6A1E55'
+                style={{
+                  backgroundColor: "#3B1C32",
+                  borderColor: "#6A1E55",
+                  color: "#A64D79",
+                  border: "1px solid #6A1E55",
                 }}
                 placeholder="Enter your email"
                 required
                 whileFocus={{
                   scale: 1.02,
-                  boxShadow: '0 0 0 2px #A64D79'
+                  boxShadow: "0 0 0 2px #A64D79",
                 }}
                 transition={{ duration: 0.2 }}
               />
@@ -573,30 +212,34 @@ const RegisterPage = () => {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <label className="block text-sm sm:text-base font-medium mb-2 lg:mb-3" 
-                   style={{ color: '#A64D79' }}>
+            <label
+              className="block text-sm sm:text-base font-medium mb-2 lg:mb-3"
+              style={{ color: "#A64D79" }}
+            >
               Phone Number
             </label>
             <div className="relative">
-              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5" 
-                     style={{ color: '#6A1E55' }} />
+              <Phone
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
+                style={{ color: "#6A1E55" }}
+              />
               <motion.input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 lg:py-4 rounded-lg outline-none text-sm sm:text-base transition-all duration-300 focus:ring-2"
-                style={{ 
-                  backgroundColor: '#3B1C32',
-                  borderColor: '#6A1E55',
-                  color: '#A64D79',
-                  border: '1px solid #6A1E55'
+                style={{
+                  backgroundColor: "#3B1C32",
+                  borderColor: "#6A1E55",
+                  color: "#A64D79",
+                  border: "1px solid #6A1E55",
                 }}
                 placeholder="Enter your phone number"
                 required
                 whileFocus={{
                   scale: 1.02,
-                  boxShadow: '0 0 0 2px #A64D79'
+                  boxShadow: "0 0 0 2px #A64D79",
                 }}
                 transition={{ duration: 0.2 }}
               />
@@ -604,30 +247,34 @@ const RegisterPage = () => {
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <label className="block text-sm sm:text-base font-medium mb-2 lg:mb-3" 
-                   style={{ color: '#A64D79' }}>
+            <label
+              className="block text-sm sm:text-base font-medium mb-2 lg:mb-3"
+              style={{ color: "#A64D79" }}
+            >
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5" 
-                    style={{ color: '#6A1E55' }} />
+              <Lock
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
+                style={{ color: "#6A1E55" }}
+              />
               <motion.input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full pl-10 sm:pl-12 pr-12 sm:pr-14 py-2 sm:py-3 lg:py-4 rounded-lg outline-none text-sm sm:text-base transition-all duration-300 focus:ring-2"
-                style={{ 
-                  backgroundColor: '#3B1C32',
-                  borderColor: '#6A1E55',
-                  color: '#A64D79',
-                  border: '1px solid #6A1E55'
+                style={{
+                  backgroundColor: "#3B1C32",
+                  borderColor: "#6A1E55",
+                  color: "#A64D79",
+                  border: "1px solid #6A1E55",
                 }}
                 placeholder="Enter your password"
                 required
                 whileFocus={{
                   scale: 1.02,
-                  boxShadow: '0 0 0 2px #A64D79'
+                  boxShadow: "0 0 0 2px #A64D79",
                 }}
                 transition={{ duration: 0.2 }}
               />
@@ -635,40 +282,48 @@ const RegisterPage = () => {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 flex items-center justify-center"
-                style={{ color: '#6A1E55' }}
-                whileHover={{ scale: 1.1, color: '#A64D79' }}
+                style={{ color: "#6A1E55" }}
+                whileHover={{ scale: 1.1, color: "#A64D79" }}
                 whileTap={{ scale: 0.9 }}
               >
-                {showPassword ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
+                {showPassword ? (
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                )}
               </motion.button>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <label className="block text-sm sm:text-base font-medium mb-2 lg:mb-3" 
-                   style={{ color: '#A64D79' }}>
+            <label
+              className="block text-sm sm:text-base font-medium mb-2 lg:mb-3"
+              style={{ color: "#A64D79" }}
+            >
               Confirm Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5" 
-                    style={{ color: '#6A1E55' }} />
+              <Lock
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5"
+                style={{ color: "#6A1E55" }}
+              />
               <motion.input
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 className="w-full pl-10 sm:pl-12 pr-12 sm:pr-14 py-2 sm:py-3 lg:py-4 rounded-lg outline-none text-sm sm:text-base transition-all duration-300 focus:ring-2"
-                style={{ 
-                  backgroundColor: '#3B1C32',
-                  borderColor: '#6A1E55',
-                  color: '#A64D79',
-                  border: '1px solid #6A1E55'
+                style={{
+                  backgroundColor: "#3B1C32",
+                  borderColor: "#6A1E55",
+                  color: "#A64D79",
+                  border: "1px solid #6A1E55",
                 }}
                 placeholder="Confirm your password"
                 required
                 whileFocus={{
                   scale: 1.02,
-                  boxShadow: '0 0 0 2px #A64D79'
+                  boxShadow: "0 0 0 2px #A64D79",
                 }}
                 transition={{ duration: 0.2 }}
               />
@@ -676,11 +331,15 @@ const RegisterPage = () => {
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 flex items-center justify-center"
-                style={{ color: '#6A1E55' }}
-                whileHover={{ scale: 1.1, color: '#A64D79' }}
+                style={{ color: "#6A1E55" }}
+                whileHover={{ scale: 1.1, color: "#A64D79" }}
                 whileTap={{ scale: 0.9 }}
               >
-                {showConfirmPassword ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
+                {showConfirmPassword ? (
+                  <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+                )}
               </motion.button>
             </div>
           </motion.div>
@@ -692,16 +351,16 @@ const RegisterPage = () => {
             whileHover="hover"
             whileTap="tap"
             className="w-full py-2 sm:py-3 lg:py-4 px-4 rounded-lg transition-all duration-300 font-medium text-sm sm:text-base lg:text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{ 
-              backgroundColor: '#A64D79',
-              color: '#1A1A1D'
+            style={{
+              backgroundColor: "#A64D79",
+              color: "#1A1A1D",
             }}
           >
             <motion.span
               animate={loading ? { opacity: [1, 0.5, 1] } : { opacity: 1 }}
               transition={loading ? { repeat: Infinity, duration: 1 } : {}}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? "Creating Account..." : "Create Account"}
             </motion.span>
           </motion.button>
         </motion.form>
@@ -710,15 +369,15 @@ const RegisterPage = () => {
           variants={itemVariants}
           className="mt-6 sm:mt-8 text-center"
         >
-          <p className="text-sm sm:text-base" style={{ color: '#A64D79' }}>
-            Already have an account?{' '}
+          <p className="text-sm sm:text-base" style={{ color: "#A64D79" }}>
+            Already have an account?{" "}
             <motion.button
-              onClick={() => navigate('/login')} // ✅ Navigate to login
+              onClick={() => navigate("/login")} // ✅ Navigate to login
               className="font-medium transition-colors duration-200"
-              style={{ color: '#A64D79' }}
-              whileHover={{ 
+              style={{ color: "#A64D79" }}
+              whileHover={{
                 scale: 1.05,
-                textShadow: '0 0 8px #A64D79'
+                textShadow: "0 0 8px #A64D79",
               }}
               whileTap={{ scale: 0.95 }}
             >

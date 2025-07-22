@@ -692,7 +692,7 @@ const CreateBlog = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const contentRef = useRef(null);
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const categories = [
     "Technology",
     "Health",
@@ -815,7 +815,7 @@ const CreateBlog = () => {
         formDataToSend.append("image", selectedImage);
       }
 
-      const response = await fetch("http://localhost:5000/api/blogs", {
+      const response = await fetch(`${API_BASE_URL}/api/blogs`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

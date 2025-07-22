@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 // import RegisterPage from "../pages/RegisterPage";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   PenTool,
   Users,
@@ -104,7 +104,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
       gradient: "from-[#4A5568] to-[#718096]",
       hoverGradient: "from-[#718096] to-[#4A5568]",
       // onClick: onSignIn
-      onClick: () => navigate('/login'),
+      onClick: () => navigate("/login"),
     },
     {
       icon: <UserPlus className="w-5 h-5" />,
@@ -113,7 +113,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
       gradient: "from-[#6A1E55] to-[#A64D79]",
       hoverGradient: "from-[#A64D79] to-[#6A1E55]",
       // onClick: onSignUp
-      onClick: () => navigate('/register'),
+      onClick: () => navigate("/register"),
     },
     {
       icon: <Settings className="w-5 h-5" />,
@@ -122,8 +122,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
       gradient: "from-[#3B1C32] to-[#6A1E55]",
       hoverGradient: "from-[#6A1E55] to-[#3B1C32]",
       // onClick: onSignIn
-      onClick: () => navigate('/login'),
-      
+      onClick: () => navigate("/login"),
     },
   ];
 
@@ -173,7 +172,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
             >
               {authButtons.map((button, index) => (
                 <motion.div
-                onClick={button.onClick}
+                  onClick={button.onClick}
                   key={index}
                   className={`bg-gradient-to-r ${button.gradient} p-6 rounded-xl border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer group`}
                   variants={scaleIn}
@@ -201,7 +200,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
               variants={fadeInUp}
             >
               <motion.button
-              onClick={() => navigate('/login')}
+                onClick={() => navigate("/login")}
                 className="px-8 py-4 bg-gradient-to-r from-[#6A1E55] to-[#A64D79] rounded-lg text-lg font-semibold hover:from-[#A64D79] hover:to-[#6A1E55] transition-all duration-300 flex items-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -210,7 +209,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
                 <span>Start Writing</span>
               </motion.button>
               <motion.button
-              onClick={() => navigate('/login')}
+                onClick={() => navigate("/login")}
                 className="px-8 py-4 border border-[#A64D79] rounded-lg text-lg font-semibold hover:bg-[#A64D79]/20 transition-all duration-300 flex items-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -308,7 +307,7 @@ const LandingPage = ({ onSignIn, onSignUp }) => {
               with the world
             </p>
             <motion.button
-            onClick={() => navigate('/login')}
+              onClick={() => navigate("/login")}
               className="px-8 py-4 bg-white text-[#1A1A1D] rounded-lg text-lg font-semibold hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2 mx-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
