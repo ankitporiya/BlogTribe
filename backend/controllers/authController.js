@@ -2,7 +2,12 @@
 const User = require('../models/User');
 const { generateToken } = require('../utils/generateToken');
 const { body, validationResult } = require('express-validator');
-
+const Blog = require('../models/Blog');
+const cloudinary = require('cloudinary').v2;
+// Helper function to delete image from Cloudinary (if not already present)
+const deleteFromCloudinary = async (publicId) => {
+  return cloudinary.uploader.destroy(publicId);
+};
 // Validation rules
 const registerValidation = [
   body('name')
@@ -411,6 +416,49 @@ const toggleUserStatus = async (req, res) => {
 };
 
 // Admin: Delete User
+// const deleteUser = async (req, res) => {
+//   try {
+//     // Check if user is admin
+//     if (req.user.role !== 'admin') {
+//       return res.status(403).json({
+//         success: false,
+//         message: 'Access denied. Admin privileges required.'
+//       });
+//     }
+
+//     const user = await User.findById(req.params.id);
+//     if (!user) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'User not found'
+//       });
+//     }
+
+//     // Prevent admin from deleting themselves
+//     if (user._id.toString() === req.user.userId) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Cannot delete your own account'
+//       });
+//     }
+
+//     await User.findByIdAndDelete(req.params.id);
+
+//     res.json({
+//       success: true,
+//       message: 'User deleted successfully'
+//     });
+//   } catch (error) {
+//     console.error('Delete user error:', error);
+//     res.status(500).json({ 
+//       success: false, 
+//       message: 'Server error deleting user' 
+//     });
+//   }
+// };
+
+
+// Admin: Delete User and All Associated Blogs
 const deleteUser = async (req, res) => {
   try {
     // Check if user is admin
@@ -421,7 +469,11 @@ const deleteUser = async (req, res) => {
       });
     }
 
-    const user = await User.findById(req.params.id);
+    const userId = req.params.id;
+    console.log('🗑️ Delete User - Starting deletion for user ID:', userId);
+
+    // Find the user first
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -437,17 +489,61 @@ const deleteUser = async (req, res) => {
       });
     }
 
-    await User.findByIdAndDelete(req.params.id);
+    console.log('🗑️ Delete User - Found user:', user.name, user.email);
+
+    // Find all blogs authored by this user
+    const userBlogs = await Blog.find({ author: userId });
+    console.log(`🗑️ Delete User - Found ${userBlogs.length} blogs to delete`);
+
+    // Delete all images from Cloudinary for user's blogs
+    const cloudinaryDeletionPromises = userBlogs.map(async (blog) => {
+      try {
+        if (blog.image && blog.image.publicId) {
+          console.log('🗑️ Delete User - Deleting image from Cloudinary:', blog.image.publicId);
+          await deleteFromCloudinary(blog.image.publicId);
+        }
+      } catch (error) {
+        console.error(`❌ Error deleting image ${blog.image?.publicId}:`, error);
+        // Continue with deletion even if image deletion fails
+      }
+    });
+
+    // Wait for all Cloudinary deletions to complete
+    await Promise.allSettled(cloudinaryDeletionPromises);
+    console.log('🗑️ Delete User - Completed Cloudinary image deletions');
+
+    // Delete all blogs authored by the user
+    const blogDeletionResult = await Blog.deleteMany({ author: userId });
+    console.log(`🗑️ Delete User - Deleted ${blogDeletionResult.deletedCount} blogs`);
+
+    // Remove user from likes and comments in other blogs
+    await Blog.updateMany(
+      { likes: userId },
+      { $pull: { likes: userId } }
+    );
+    console.log('🗑️ Delete User - Removed user from blog likes');
+
+    await Blog.updateMany(
+      { 'comments.user': userId },
+      { $pull: { comments: { user: userId } } }
+    );
+    console.log('🗑️ Delete User - Removed user comments from blogs');
+
+    // Finally, delete the user
+    await User.findByIdAndDelete(userId);
+    console.log('🗑️ Delete User - User deleted successfully');
 
     res.json({
       success: true,
-      message: 'User deleted successfully'
+      message: `User deleted successfully. ${blogDeletionResult.deletedCount} associated blogs were also removed.`,
+      deletedBlogs: blogDeletionResult.deletedCount
     });
+
   } catch (error) {
-    console.error('Delete user error:', error);
+    console.error('❌ Delete user error:', error);
     res.status(500).json({ 
       success: false, 
-      message: 'Server error deleting user' 
+      message: 'Server error deleting user and associated data' 
     });
   }
 };
